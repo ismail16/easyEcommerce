@@ -314,30 +314,38 @@
 
                     purchase_units: [{
                         amount: {
-                            value: '500',
+                            value: '{{ $totalAmount + 100 }}',
                             currency: 'USD'
                         }
                     }],
 
                 });
             },
+
+            // `id`, `order_id`, `name`, `user_id`, `payment_id`, `transaction_id`, `payment_method`, `amount`, `receipt_url`, `pay_type`, `card_type`, `last4`, `status`, `created_at`, `updated_at`SELECT * FROM `payments` WHERE 1
+
+            // order_id:order_id,payment_id:payment_id,transaction_id:transaction_id,payment_method:payment_method,amount:amount,receipt_url:receipt_url,pay_type:pay_type,card_type:card_type,last4:last4,
+
+
+
             onApprove: function(data, actions) {
 
                 // Capture the funds from the transaction
                 return actions.order.capture().then(function(details) {
                     // Show a success message to your buyer
-                    var paperID = '12457893';
+                    var order_id = '{{$order_id}}';
+                    var payment_method = 'PayPal';
                     $.ajax({
-                        url: "gggggg",
+                        url: "{{route('payment_pay_paypal')}}",
                         method: "POST",
                         dataType: "JSON",
-                        data: {cdetails:details, paper_id: paperID, _token: '{{csrf_token()}}'},
+                        data: {cdetails:details, order_id:order_id,payment_method:payment_method, _token: '{{csrf_token()}}'},
                         success: function (res) {
                             console.log(res);
                             Swal.fire('Transaction completed by ' + details.payer.name.given_name + '! Please check your mail');
-                            window.setTimeout(function () {
-                                window.location = 'ssssssssssss';
-                            }, 3000);
+                            // window.setTimeout(function () {
+                            //     window.location = "URL::to('/')"; 
+                            // }, 2000);
                         }
                     });
                 });

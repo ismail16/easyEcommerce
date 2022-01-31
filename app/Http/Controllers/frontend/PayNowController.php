@@ -89,6 +89,53 @@ class PayNowController extends Controller
         return view('frontend.pages.order_confirmation', compact('order_id'));
     }
 
+    public function payment_pay_paypal(Request $request){
+
+        // -------------------------------------
+
+        $payment = new Payment;
+
+        $transFee = 0;
+        $order_id = $request->order_id;
+        $details = $request->cdetails;
+
+        // $order = Order::where('id', $order_id)->first();
+
+        $given_name = $details['payer']['name']['given_name'];
+        $surname = $details['payer']['name']['surname'];
+        if (Auth::check()) {
+            $user_id = Auth::id();
+        }else{
+            $user_id = request()->ip();
+        }
+        $email = $details['payer']['email_address'];
+        $transaction_id = $details['id'];
+        $payment_method = $request->payment_method;
+        // -------------------------------------
+
+        $payment->order_id = $order_id;
+        $payment->name = $given_name.' '.$surname;
+        $payment->user_id = $user_id;
+        $payment->payment_id = $email;
+        $payment->transaction_id = $transaction_id;
+        $payment->payment_method = $payment_method;
+        // $payment->amount = $amount;
+        // $payment->receipt_url = $receipt_url;
+        // $payment->pay_type = $pay_type;
+        // $payment->card_type = $card_type;
+        // $payment->last4 = $last4;
+        $payment->save();
+
+        return $payment;
+
+        
+        
+
+        // Cart::orWhere('user_id', Auth::id())->orWhere('ip_address', request()->ip())->delete();
+
+        // return view('frontend.pages.order_confirmation', compact('order_id'));
+    }
+
     public function payment_pay_cash_in(Request $request){
 
         // $this->validate($request, [

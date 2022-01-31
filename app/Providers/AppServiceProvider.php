@@ -25,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $setting = \App\Models\Setting::orderBy('id', 'desc')->first();
+        view()->share(compact('setting'));
+
         Schema::defaultStringLength(191);
     }
 }

@@ -93,7 +93,11 @@ Route::get('payment-pay-now', 'frontend\PayNowController@payment_pay_now')->name
 Route::get('payment-pay-now-order/{id}', 'frontend\PayNowController@payment_pay_now_order')->name('payment_pay_now_order');
 
 Route::post('payment-pay-store', 'frontend\PayNowController@payment_pay_store')->name('payment_pay_store');
+
+Route::post('payment-pay-paypal', 'frontend\PayNowController@payment_pay_paypal')->name('payment_pay_paypal');
+
 Route::post('payment-pay-cash-in', 'frontend\PayNowController@payment_pay_cash_in')->name('payment_pay_cash_in');
+
 Route::post('payment-pay-2checkout', 'frontend\PayNowController@payment_pay_2checkout')->name('payment_pay_2checkout');
 // Route::post('payment-pay-bkash', 'frontend\PayNowController@payment_pay_bkash')->name('payment_pay_bkash');
 // Route::post('payment-pay-rocket', 'frontend\PayNowController@payment_pay_rocket')->name('payment_pay_rocket');

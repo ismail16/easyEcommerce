@@ -328,29 +328,36 @@
 
                     purchase_units: [{
                         amount: {
-                            value: '500',
+                            value: '{{ $totalAmount + 100 }}',
                             currency: 'USD'
                         }
                     }],
 
                 });
             },
-            onApprove: function(data, actions) {
 
+            onApprove: function(data, actions) {
                 // Capture the funds from the transaction
                 return actions.order.capture().then(function(details) {
                     // Show a success message to your buyer
-                    var paperID = '12457893';
+                    var order_id = '{{$order->id}}';
+                    var payment_method = 'PayPal';
                     $.ajax({
-                        url: "gggggg",
+                        url: "{{route('payment_pay_paypal')}}",
                         method: "POST",
                         dataType: "JSON",
-                        data: {cdetails:details, paper_id: paperID, _token: '{{csrf_token()}}'},
+                        data: {cdetails:details, order_id:order_id,payment_method:payment_method, _token: '{{csrf_token()}}'},
                         success: function (res) {
                             console.log(res);
-                            Swal.fire('Transaction completed by ' + details.payer.name.given_name + '! Please check your mail');
+                            Swal.fire('Transaction completed by ' + res.name + '! Please check your mail');
                             window.setTimeout(function () {
-                                window.location = 'ssssssssssss';
+                                if (res.name.user_id == 1) {
+                                    window.location = "{{route('admin.order.show', $order->id)}}"; 
+                                }else if(res.name.user_id == 2){
+                                    window.location = "{{route('author.invoice', $order->id)}}"; 
+                                }else{
+                                    window.location = "{{route('card.invoice', $order->id)}}"; 
+                                }
                             }, 3000);
                         }
                     });
@@ -358,6 +365,7 @@
             }
         }).render('#paypal-button-container');
     </script>
+
 
 <script src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
 

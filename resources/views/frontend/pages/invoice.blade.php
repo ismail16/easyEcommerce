@@ -21,8 +21,12 @@
                   <div class="row card-header">
                     <div class="col-12">
                     <h4>
-                        <i class="fa fa-globe"></i> AdminLTE, Inc.
-                        <small class="float-right">Date: 2/10/2014</small>
+                        <img src="{{ asset('images/store_logo/'.$setting->store_logo)}}" height="50" alt=""><br>
+                        <strong>{{ $setting->store_name }}.</strong>
+                        <address class="float-right">
+                            <strong class="border-bottom">Order Date </strong><br>
+                            <small>{{ $order->created_at->format('d-m-Y H:iA') }}</small>
+                        </address>
                     </h4>
                     </div>
                 </div>
@@ -102,7 +106,7 @@
                         <img src="{{ asset('backend_assets/dist/img/credit/american-express.png') }}" alt="American Express">
                         <img src="{{ asset('backend_assets/dist/img/credit/paypal2.png') }}" alt="Paypal">
 
-                        <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                        <p class="text-muted well well-sm mt-4 shadow-none">
                             Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
                             plugg
                             dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.

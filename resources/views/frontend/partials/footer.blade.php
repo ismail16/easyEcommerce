@@ -1,8 +1,5 @@
 {{--</div>--}}
     </div>
-    @php
-        $setting = \App\Models\Setting::orderBy('id', 'desc')->first();
-    @endphp
         <div class="">
             <div class="newsletter_area">
                 <div class="container">
